@@ -1,6 +1,6 @@
 name: Dev PR Test
 
-#dev 브랜치에 PR 요청시 test 수행
+# dev 브랜치에 PR 요청 시 test 수행
 
 on:
   pull_request:
@@ -13,7 +13,6 @@ jobs:
     permissions:
       contents: write
       checks: write
-      issues: write
 
     steps:
       - uses: actions/checkout@v4
@@ -29,9 +28,7 @@ jobs:
       - name: 테스트 실행
         run: ./gradlew --info test
 
-      - name: 테스트 실행 결과 저장
-        uses: EnricoMi/publish-unit-test-result-action@v2
-        if: always()
-        with:
-          junit_files: '**/build/test-results/test/TEST-*.xml'
-          comment: false
+      - name: 테스트 결과 출력
+        run: |
+          echo "JUnit 결과:"
+          cat build/test-results/test/TEST-*.xml
