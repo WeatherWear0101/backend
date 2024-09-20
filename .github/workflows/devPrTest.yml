@@ -29,6 +29,7 @@ jobs:
         run: ./gradlew --info test
 
       - name: 테스트 결과 출력
-        run: |
-          echo "JUnit 결과:"
-          cat build/test-results/test/TEST-*.xml
+        uses: EnricoMi/publish-unit-test-result-action@v1
+        if: ${{ always() }}
+        with:
+          files: build/test-results/**/*.xml
