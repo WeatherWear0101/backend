@@ -29,8 +29,9 @@ jobs:
       - name: 테스트 실행
         run: ./gradlew --info test
 
-      - name: 테스트 결과 출력
-        uses: EnricoMi/publish-unit-test-result-action@v1
-        if: ${{ always() }}
-        with:
-          files: build/test-results/**/*.xml
+#      GitHub API의 보조 속도 제한(secondary rate limit)을 초과로 인한 주석 처리
+#      - name: 테스트 결과 출력
+#        uses: EnricoMi/publish-unit-test-result-action@v1
+#        if: ${{ always() }}
+#        with:
+#          files: build/test-results/**/*.xml
