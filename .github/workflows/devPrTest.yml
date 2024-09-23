@@ -1,0 +1,37 @@
+name: Dev PR Test
+
+# dev 브랜치에 PR 요청 시 test 수행
+
+on:
+  pull_request:
+    branches: [ "dev" ]
+
+jobs:
+  test:
+    name: Test 실행
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+      checks: write
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Java v17 다운로드
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: gradlew 권한 부여
+        run: chmod +x gradlew
+
+      - name: 테스트 실행
+        run: ./gradlew --info test
+
+#      GitHub API의 보조 속도 제한(secondary rate limit)을 초과로 인한 주석 처리
+#      - name: 테스트 결과 출력
+#        uses: EnricoMi/publish-unit-test-result-action@v1
+#        if: ${{ always() }}
+#        with:
+#          files: build/test-results/**/*.xml
