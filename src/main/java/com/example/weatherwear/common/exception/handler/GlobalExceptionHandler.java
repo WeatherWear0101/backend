@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
+import java.nio.file.AccessDeniedException;
 import java.util.List;
 
 @Slf4j
@@ -44,10 +45,18 @@ public class GlobalExceptionHandler {
     }
 
 //    Todo: Security 설정이 마무리 되면 테스트
-//    권한이 없음
+//    403
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<HttpErrorInfo> handleAccessDeniedException(AccessDeniedException ex, HttpServletRequest request) {
+        String message = "인증이 필요합니다.";
+        return createExceptionResponse(HttpStatus.FORBIDDEN, request, message);
+    }
+
+//    Todo: Security 설정이 마무리 되면 테스트
+//    401
     @ExceptionHandler(AuthenticationException.class)
     public ResponseEntity<HttpErrorInfo> handleAuthenticationException(AuthenticationException ex, HttpServletRequest request) {
-        String message = "해당 요청의 권한이 없습니다.";
+        String message = "접근 권한이 없습니다.";
         return createExceptionResponse(HttpStatus.METHOD_NOT_ALLOWED, request, message);
     }
 
