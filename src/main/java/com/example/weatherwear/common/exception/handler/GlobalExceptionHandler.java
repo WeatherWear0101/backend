@@ -48,7 +48,7 @@ public class GlobalExceptionHandler {
 //    403
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<HttpErrorInfo> handleAccessDeniedException(AccessDeniedException ex, HttpServletRequest request) {
-        String message = "인증이 필요합니다.";
+        String message = "접근이 거부되었습니다.";
         return createExceptionResponse(HttpStatus.FORBIDDEN, request, message);
     }
 
@@ -56,8 +56,8 @@ public class GlobalExceptionHandler {
 //    401
     @ExceptionHandler(AuthenticationException.class)
     public ResponseEntity<HttpErrorInfo> handleAuthenticationException(AuthenticationException ex, HttpServletRequest request) {
-        String message = "접근 권한이 없습니다.";
-        return createExceptionResponse(HttpStatus.METHOD_NOT_ALLOWED, request, message);
+        String message = "인증이 필요합니다.";
+        return createExceptionResponse(HttpStatus.UNAUTHORIZED, request, message);
     }
 
 //    Todo: 개발하면서 테스트 진행
