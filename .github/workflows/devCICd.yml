@@ -65,5 +65,5 @@ jobs:
             sudo docker pull ${{secrets.DOCKERHUB_USERNAME}}/weatherwear
             sudo docker stop weatherwear
             sudo docker container rm weatherwear
-            sudo docker run -dit -p 8080:8080 --name back --link redis:redis --restart always ${{secrets.DOCKERHUB_USERNAME}}/weatherwear
+            sudo docker run -dit -p 8080:8080 --name back --restart always ${{secrets.DOCKERHUB_USERNAME}}/weatherwear
             sudo docker image prune -f
