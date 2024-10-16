@@ -25,11 +25,11 @@ jobs:
           cd ./src/main/resources   
           echo "${{ secrets.APPLICATION }}" > ./application.yml
 
-      - name: Grant gradlew permissions
-        run: chmod +x ./gradlew
-
       - name: Build
-        run: ./gradlew build
+        run: |
+          chmod +x ./gradlew
+          ./gradlew :spotlessApply
+          ./gradlew build
 
 
       - name: Build Docker image 
